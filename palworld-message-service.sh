@@ -2,12 +2,11 @@
 
 service="PalServer-Linux-Shipping"
 uptime=0
-timetostartmessages=15 #time in minutes
+timetostartmessages=15 #time in minutes.  Can be changes to whatever value you want in minutes.
 
 # palworldruntime grabs the value RuntimeMaxSec of the systemd file that runs palworld. palworldtimeframe grabs the letter designation e.g. h for hours
 palworldruntime=$(sed -nE 's/^RuntimeMaxSec=([*0-9]+).*/\1/p' < ~/../../etc/systemd/system/palworld.service)
 palworldtimeframe=$(sed -nE 's/^RuntimeMaxSec=[0-9]+([dh]).*/\1/p' < ~/../../etc/systemd/system/palworld.service)
-palworldtimeframe=${palworldtimeframe//[0-9]/}
 
 # countdowntime is now calculated based on if the systemd file is set for days our hours. It is also offset by timetostartmessages, so with timetostartmessages amount of time left, the messages will start.
 if [[ "$palworldtimeframe" = "h" ]]; then
@@ -28,17 +27,17 @@ do
     newstart=false
     ./ARRCON -P "$rconport" -p "$password" "BroadCast This is a test of the Palworld Emergency Broadcast System (PEBS).  If this were an emergency, you would have been notified of imminent restart."
   elif [ "$uptime" -ge "$countdowntime" ]; then
-    ./ARRCON -P "$rconport" -p "$password" "BroadCast I'm your aunt Debbie and your server will be restarting in 15 minutes"
+    ./ARRCON -P "$rconport" -p "$password" "BroadCast Server will be restarting in 15 minutes"
     sleep 300
-    ./ARRCON -P "$rconport" -p "$password" "BroadCast I'm Commander Shepard and this is my favorite Palworld server on the Citadel.  It will be restarting in 10 minutes"
+    ./ARRCON -P "$rconport" -p "$password" "BroadCast Server will be restarting in 10 minutes"
     sleep 300
-    ./ARRCON -P "$rconport" -p "$password" "BroadCast Ask me about my weiner! Also the server will be restarting in 5 minutes"
+    ./ARRCON -P "$rconport" -p "$password" "BroadCast Server will be restarting in 5 minutes"
     sleep 240
-    ./ARRCON -P "$rconport" -p "$password" "BroadCast He's dead Jim.  No he's not, he still has 1 minute before he restarts!"
+    ./ARRCON -P "$rconport" -p "$password" "BroadCast Server will be restarting in 1 minute"
     sleep 30
-    ./ARRCON -P "$rconport" -p "$password" "BroadCast You see that movie 'Gone in 60 seconds'? Well this server is restarting in 30 seconds"
+    ./ARRCON -P "$rconport" -p "$password" "BroadCast Server will be restarting in 30 seconds"
     sleep 15
-    ./ARRCON -P "$rconport" -p "$password" "BroadCast You've got 15 seconds before this server reboots.  Better finish up that battle!"
+    ./ARRCON -P "$rconport" -p "$password" "BroadCast Server will be restarting in 15 seconds"
     ./ARRCON -P "$rconport" -p "$password" "Save"
 
     # uptime is set back to 0 to start the loop from the beginning.
