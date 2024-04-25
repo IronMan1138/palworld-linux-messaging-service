@@ -1,0 +1,17 @@
+[Unit]
+Description=Palworld Dedicated Server Messaging Service 0.1 by Xor
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+User=steam
+Group=steam
+Environment="templdpath=$LD_LIBRARY_PATH"
+Environment="LD_LIBRARY_PATH=/home/steam/:$LD_LIBRARY_PATH"
+ExecStart=/home/steam/message-service-v7.sh
+Restart=always
+LimitCORE=0
+
+
+[Install]
+WantedBy=multi-user.target
