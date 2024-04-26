@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# until loop to wait until palworld.service is active and running.
+until systemctl status "palworld.service" | grep "Active: active (running)"
+do
+  sleep 60 >/dev/null 2>&1
+done
+
 service="PalServer-Linux-Shipping"
 uptime=0
 timetostartmessages=15 #time in minutes.  Can be changes to whatever value you want in minutes.
